@@ -1,0 +1,219 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Essential Packages ---
+\usepackage[utf8]{inputenc} % For character encoding
+\usepackage{geometry}       % For page margins
+\geometry{a4paper, margin=1in}
+\usepackage{xcolor}         % For coloring text
+\usepackage{hyperref}       % For clickable links and TOC
+\usepackage{listings}       % For code highlighting
+\usepackage{array}          % For advanced table features
+\usepackage{tabularx}       % For tables that automatically size columns
+
+% Explicitly load the language definitions
+% OR a more common way to ensure it's loaded if not automatically
+% \lstset{language=json} % Just by setting it, it tries to load
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={My API Documentation},
+    pdfauthor={Your Name},
+    pdfsubject={API Reference},
+    pdfkeywords={API, Documentation, LaTeX, REST}
+}
+
+% --- Listings Styles ---
+% Define styles for different code types
+% JSON Style
+
+\lstdefinestyle{jsonstyle}{
+    language=json,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    showstringspaces=false,
+    commentstyle=\color{gray!70},
+    stringstyle=\color{teal},
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue}, % JSON "keywords" are usually null, true, false
+    columns=fixed,
+    numbers=left,
+    xleftmargin=1em,
+    frame=single,
+    frameround=trbl,
+    framesep=5pt,
+    rulecolor=\color{gray!30}
+}
+
+% HTTP Request Style (can use general text, but keywords might be useful)
+\lstdefinestyle{httpstyle}{
+    language=bash, % Use bash for shell commands like cURL or generic for HTTP
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    commentstyle=\color{green!50!black},
+    keywordstyle=\color{red!70!black},
+    stringstyle=\color{purple},
+    numbers=none,
+    columns=fixed,
+    xleftmargin=1em,
+    frame=single,
+    frameround=trbl,
+    framesep=5pt,
+    rulecolor=\color{gray!30},
+    % Custom keywords for HTTP methods/headers
+    morekeywords={GET, POST, PUT, DELETE, Host, Content-Type, Authorization, Bearer}
+}
+
+% General Code (e.g., Python/JavaScript)
+\lstdefinestyle{codestyle}{
+    language=Python, % Or JavaScript, C, etc.
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    commentstyle=\color{green!50!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red!70!black},
+    numbers=left,
+    columns=fixed,
+    xleftmargin=1em,
+    frame=single,
+    frameround=trbl,
+    framesep=5pt,
+    rulecolor=\color{gray!30}
+}
+
+
+% --- Document Start ---
+\begin{document}
+
+\title{Diet Distro}
+\author{Team Almost N308}
+\date{\today}
+\maketitle
+
+% --- Table of Contents ---
+\tableofcontents
+\newpage
+
+% --- Section: Introduction ---
+\section{Introduction}
+Welcome to the documentation for Diet Distro. This API allows you to manage users, health profile, diet planning, diet sharing through a set of RESTful endpoints. All requests and responses are typically in JSON format.
+
+% --- Section: Authentication ---
+\section{Authentication APIs}
+\subsection{\textbf{\large Register a New User}}
+\begin{itemize}
+    \item \textbf{POST} \colorbox{gray!20}{\tiny /api/auth/register}
+    \item \textbf{Request Body:}
+    \begin{lstlisting}[style=jsonstyle]
+{
+    "name": "Md. Sazidur Rahman",
+    "email" : "rahmansazid2@gmail.com",
+    "password" : "password",
+    "age" : 25,
+    "gender" : male,
+    "height" : 1.7,
+    "weight" : 70
+}
+\end{lstlisting}
+    \item \textbf{Response:} \colorbox{gray!20}{201 created}
+    \begin{lstlisting}[style = jsonstyle]
+{
+    "id": 1,
+    "name": "Md. Sazidur Rahman",
+    "email": "rahmansazid2@gmail.com",
+    "created_at": "2024-07-29T08:45:00Z"
+}
+    \end{lstlisting}
+    
+\end{itemize}
+
+\subsection{\textbf{\large Login}}
+\begin{itemize}
+    \item \textbf{POST} \colorbox{gray!20}{\tiny /api/auth/login}
+    \item \textbf{Request Body:}
+        \begin{lstlisting}[style=jsonstyle]
+{
+    "email" : "rahmansazid2@gmail.com",
+    "password" : "password"
+}
+        \end{lstlisting}
+        OR
+        \begin{lstlisting}[style=jsonstyle]
+{
+    "name" : "Md . Sazidur Rahman ",
+    "password" : "password"
+}
+        \end{lstlisting}
+    \item \textbf{Response:}  \colorbox{gray!20}{200 OK}
+        \begin{lstlisting}[style=jsonstyle]
+{
+    "token" : "<JWT_TOKEN>"
+    "expires_in": <time in sec>
+}
+        \end{lstlisting}
+\end{itemize}
+
+
+% --- Section: User Management ---
+\section{User Management}
+This section details the endpoints related to user management.
+
+\subsection{Get User Details}
+\label{api:getUserDetails}
+
+This endpoint retrieves the details of a single user by their ID.
+
+\subsubsection*{Endpoint}
+\begin{lstlisting}[style=httpstyle, numbers=none]
+GET /api/users/{id}
+\end{lstlisting}
+OR\begin{lstlisting}[style=httpstyle, numbers=none]
+GET /api/users/{user_name}
+\end{lstlisting}
+OR
+\begin{lstlisting}[style=httpstyle, numbers=none]
+GET /api/users/{user_email}
+\end{lstlisting}
+
+\subsubsection*{Response Codes}
+\begin{tabularx}{\linewidth}{|l|l|X|}
+    \hline
+    \textbf{Code} & \textbf{Status} & \textbf{Description} \\
+    \hline
+    \texttt{200} & \texttt{OK} & User details retrieved successfully. \\
+    \hline
+    \texttt{404} & \texttt{Not Found} & The specified user ID does not exist. \\
+    \hline
+    \texttt{401} & \texttt{Unauthorized} & Invalid or missing authentication token. \\
+    \hline
+\end{tabularx}
+
+\subsubsection*{Successful Response (200 OK)}
+\begin{lstlisting}[style=jsonstyle]
+{
+    "id": 123,
+    "name": "Md. Sazidur Rahman",
+    "email" : "rahmansazid2@gmail.com",
+    "age" : 25,
+    "gender" : male,
+    "height" : 1.7,
+    "weight" : 70
+    "created_at": "2024-01-15T10:00:00Z"
+}
+\end{lstlisting}
+
+\subsubsection*{Error Response (404 Not Found)}
+\begin{lstlisting}[style=jsonstyle]
+{
+  "error": "User not found",
+  "code": 404
+}
+\end{lstlisting}
+
+% --- Cross-referencing example ---
+For details on retrieving user information, refer to Section \ref{api:getUserDetails}.
+
+\end{document}
