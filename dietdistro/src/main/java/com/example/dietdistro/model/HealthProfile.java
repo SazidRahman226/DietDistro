@@ -9,7 +9,7 @@ import lombok.*;
 public class HealthProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "health_id_seq_gen")
-    @SequenceGenerator(name = "health_id_seq_gen", sequenceName = "id_gen")
+    @SequenceGenerator(name = "health_id_seq_gen", sequenceName = "id_gen", allocationSize = 1)
     private Long id;
 
     private double height; // in cm

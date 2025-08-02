@@ -1,11 +1,13 @@
 package com.example.dietdistro.controller;
 
+import com.example.dietdistro.dto.SigninRequest;
 import com.example.dietdistro.model.Role;
 import com.example.dietdistro.model.User;
 import com.example.dietdistro.repository.RoleRepository;
 import com.example.dietdistro.repository.UserRepository;
 import com.example.dietdistro.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.util.IStructureModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class UserController {
 
     private final UserRepository userRepo;
     private final RoleRepository roleRepo;
@@ -31,7 +33,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email already exists!");
         }
 
-        Role userRole = roleRepo.findByName("ROLE_USER").orElseThrow();
+        Role userRole = roleRepo.findByName("USER").orElseThrow();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(userRole));
         userRepo.save(user);
@@ -40,15 +42,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginRequest) {
-        User user = userRepo.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+    public ResponseEntity<?> login(@RequestBody SigninRequest user) {
 
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return ResponseEntity.badRequest().body("Invalid credentials");
+        User _user = userRepo.findByEmail(user.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(user.getPassword(), _user.getPassword())) {
+            return ResponseEntity.badRequest().body("Invalid email or password");
         }
 
-        String token = jwtUtil.generateToken(user.getUsername());
+        String token = jwtUtil.generateToken(_user.getUsername());
         return ResponseEntity.ok(token);
     }
 }

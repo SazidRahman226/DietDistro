@@ -13,7 +13,7 @@ public class FoodItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_seq_gen")
-    @SequenceGenerator(name = "food_item_seq_gen", sequenceName = "food_item_seq")
+    @SequenceGenerator(name = "food_item_seq_gen", sequenceName = "food_item_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)

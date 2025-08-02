@@ -30,8 +30,17 @@ public class HealthProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        return profileService.getProfile(user)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        HealthProfile healthProfile = profileService.getProfile(user).orElseThrow(() -> new RuntimeException("User not found!"));
+
+        return ResponseEntity.ok(
+                "{" +
+                        "\n\t\"username\": " + "\"" + user.getUsername() + "\"" +
+                        "\n\t\"age\": " + healthProfile.getAge() +
+                        "\n\t\"height\":" + healthProfile.getHeight() +
+                        "\n\t\"weight\":" + healthProfile.getWeight() +
+                        "\n\t\"bmi\":" + healthProfile.getBmi() +
+                        "\n\t\"bmr\":" + healthProfile.getBmr() +
+                "\n}"
+        );
     }
 }

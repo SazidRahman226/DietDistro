@@ -18,7 +18,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq_gen")
-    @SequenceGenerator(name = "id_seq_gen", sequenceName = "id_gen")
+    @SequenceGenerator(name = "id_seq_gen", sequenceName = "id_gen", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)
