@@ -8,6 +8,7 @@ import com.example.dietdistro.service.FoodItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class FoodItemController {
     private final FoodItemService foodItemServiceService;
     private final FoodItemRepository foodItemRepository;
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add-batch")
     public ResponseEntity<?> createOrUpdateProfile(@Valid @RequestBody FoodItemBatchRequest request) {
 
@@ -30,6 +31,7 @@ public class FoodItemController {
         return ResponseEntity.ok("Items added successfully!");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> createOrUpdateProfile(@Valid @RequestBody FoodItemRequest foodItemRequest) {
         FoodItem foodITem = foodItemServiceService.saveOrUpdateFoodItem(foodItemRequest);

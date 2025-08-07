@@ -9,17 +9,19 @@ import com.example.dietdistro.service.HealthProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/health-profile")
+@RequestMapping("/health-profile")
 @RequiredArgsConstructor
 public class HealthProfileController {
 
     private final HealthProfileService profileService;
     private final UserRepository userRepository;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> createOrUpdateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -29,6 +31,7 @@ public class HealthProfileController {
         return ResponseEntity.ok("{\n\t\"bmi\": " + profile.getBmi() + "\n\t\"bmr\": " + profile.getBmr() + "\n}");
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<?> getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
