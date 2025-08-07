@@ -16,28 +16,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Getter
 @Setter
-
 public class HealthProfileService {
 
     private final HealthProfileRepository profileRepo;
     private final UserRepository userRepo;
 
     public HealthProfile saveOrUpdateProfile(User user, HealthProfileRequest req) {
+        // 1. Calculate BMI and BMR
         double bmi = calculateBMI(req.getWeight(), req.getHeight());
         double bmr = calculateBMR(req.getWeight(), req.getHeight(), req.getAge(), req.getGender());
 
+        // 2. Get existing profile or create a new one
+        HealthProfile profile;
+        if (user.getHealthProfile() != null) {
+            // If the user already has a profile, use it
+            profile = user.getHealthProfile();
+        } else {
+            // Otherwise, create a new profile
+            profile = new HealthProfile();
+            // Since it's a new profile, set the bidirectional relationship
+            profile.setUser(user);
+            user.setHealthProfile(profile);
+        }
 
-
-//        HealthProfile profile = profileRepo.findByUser(user)
-//                .orElse(new HealthProfile());
-//        profile.setUser(user);
+        // 3. Update the profile's fields with new data
         profile.setHeight(req.getHeight());
         profile.setWeight(req.getWeight());
         profile.setAge(req.getAge());
         profile.setGender(req.getGender());
         profile.setBmi(bmi);
         profile.setBmr(bmr);
-        user.setHealthProfile(profile);
+
+        // 4. Save the profile
         return profileRepo.save(profile);
     }
 
@@ -56,8 +66,8 @@ public class HealthProfileService {
         }
     }
 
-    public Optional<HealthProfile> getProfile(User user) {
-        return profileRepo.findByUser(user);
+    public Optional<HealthProfile> getId(Long id) {
+        return profileRepo.findById(id);
     }
 
     public String getName(User user)

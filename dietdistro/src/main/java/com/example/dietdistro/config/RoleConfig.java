@@ -17,11 +17,11 @@ public class RoleConfig implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Add roles only if they don't exist
-        if (!roleRepository.existsByName("USER")) {
-            roleRepository.save(new Role("USER"));
+        if (!roleRepository.existsByName("ROLE_USER")) {
+            roleRepository.save(new Role("ROLE_USER"));
         }
-        if (!roleRepository.existsByName("ADMIN")) {
-            roleRepository.save(new Role("ADMIN"));
+        if (!roleRepository.existsByName("ROLE_ADMIN")) {
+            roleRepository.save(new Role("ROLE_ADMIN"));
         }
     }
 }

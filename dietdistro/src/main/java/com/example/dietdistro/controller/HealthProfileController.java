@@ -3,6 +3,7 @@ package com.example.dietdistro.controller;
 import com.example.dietdistro.dto.HealthProfileRequest;
 import com.example.dietdistro.model.HealthProfile;
 import com.example.dietdistro.model.User;
+import com.example.dietdistro.repository.UserRepository;
 import com.example.dietdistro.security.CustomUserDetails;
 import com.example.dietdistro.service.HealthProfileService;
 import jakarta.validation.Valid;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.*;
 public class HealthProfileController {
 
     private final HealthProfileService profileService;
+    private final UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<?> createOrUpdateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @RequestBody HealthProfileRequest request) {
-        User user = userDetails.getUser();
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found!"));
         HealthProfile profile = profileService.saveOrUpdateProfile(user, request);
         return ResponseEntity.ok("{\n\t\"bmi\": " + profile.getBmi() + "\n\t\"bmr\": " + profile.getBmr() + "\n}");
     }
@@ -30,7 +32,7 @@ public class HealthProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        HealthProfile healthProfile = profileService.getProfile(user).orElseThrow(() -> new RuntimeException("User not found!"));
+        HealthProfile healthProfile = profileService.getId(user.getHealthProfile().getId()).orElseThrow(() -> new RuntimeException("User not found!"));
 
         return ResponseEntity.ok(
                 "{" +

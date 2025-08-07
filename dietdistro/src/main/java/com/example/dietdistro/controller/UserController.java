@@ -1,6 +1,7 @@
 package com.example.dietdistro.controller;
 
 import com.example.dietdistro.dto.SigninRequest;
+import com.example.dietdistro.dto.SignupRequest;
 import com.example.dietdistro.model.HealthProfile;
 import com.example.dietdistro.model.Role;
 import com.example.dietdistro.model.User;
@@ -32,16 +33,19 @@ public class UserController {
     private final AuthEntryPointJwt authEntryPointJwt;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        if (userRepo.existsByUsername(user.getUsername())) {
+    public ResponseEntity<?> register(@RequestBody SignupRequest signupRequest) {
+
+        if (userRepo.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username already exists!");
         }
-        if (userRepo.existsByEmail(user.getEmail())) {
+        if (userRepo.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity.badRequest().body("Email already exists!");
         }
-
-        Role userRole = roleRepo.findByName("USER").orElseThrow();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        Role userRole = roleRepo.findByName("ROLE_USER").orElseThrow();
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+        user.setEmail(signupRequest.getEmail());
         user.setRoles(Set.of(userRole));
         userRepo.save(user);
 

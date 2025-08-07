@@ -18,6 +18,11 @@ public class UserInfo {
 
     private String username;
     private String email;
-    private HealthProfile healthProfile;
+    private double height;
+    private double weight;
+    private int age;
+    private String gender;
+    private double bmi;
+    private double bmr;
 
 }

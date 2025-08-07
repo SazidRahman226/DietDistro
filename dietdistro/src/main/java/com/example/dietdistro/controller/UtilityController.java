@@ -19,7 +19,17 @@ public class UtilityController {
     public ResponseEntity<?> userInfo(@PathVariable String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Error!"));
-        UserInfo userInfo = new UserInfo(username, user.getEmail(), user.getHealthProfile());
+        UserInfo userInfo = new UserInfo();
+
+        userInfo.setUsername(user.getUsername());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setHeight(user.getHealthProfile().getHeight());
+        userInfo.setWeight(user.getHealthProfile().getWeight());
+        userInfo.setAge(user.getHealthProfile().getAge());
+        userInfo.setGender(user.getHealthProfile().getGender());
+        userInfo.setBmi(user.getHealthProfile().getBmi());
+        userInfo.setBmr(user.getHealthProfile().getBmr());
+
         return ResponseEntity.ok(userInfo);
     }
 }

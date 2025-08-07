@@ -38,7 +38,7 @@ public class User {
     )
     private Set<Role> roles;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "healthprofile_id")
     private HealthProfile healthProfile;
 }
