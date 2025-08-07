@@ -37,4 +37,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToOne
+    @JoinColumn(name = "healthprofile_id")
+    private HealthProfile healthProfile;
 }

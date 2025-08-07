@@ -20,7 +20,7 @@ public class HealthProfile {
     private double bmi;
     private double bmr;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "user_id", nullable = false, unique = true)
+//    private User user;
 }

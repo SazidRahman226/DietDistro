@@ -1,17 +1,23 @@
 package com.example.dietdistro.controller;
 
 import com.example.dietdistro.dto.SigninRequest;
+import com.example.dietdistro.model.HealthProfile;
 import com.example.dietdistro.model.Role;
 import com.example.dietdistro.model.User;
 import com.example.dietdistro.repository.RoleRepository;
 import com.example.dietdistro.repository.UserRepository;
+import com.example.dietdistro.security.AuthEntryPointJwt;
+import com.example.dietdistro.security.CustomUserDetails;
 import com.example.dietdistro.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.Token;
 import org.aspectj.util.IStructureModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -23,6 +29,7 @@ public class UserController {
     private final RoleRepository roleRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final AuthEntryPointJwt authEntryPointJwt;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {

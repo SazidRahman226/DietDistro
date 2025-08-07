@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Entity
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class FoodItem {
@@ -20,7 +22,7 @@ public class FoodItem {
     private String foodName;
 
     @Column(nullable = false)
-    private String[] category;
+    private Set < String > category;
 
     @Column(nullable = false)
     private Double caloriePerGram;

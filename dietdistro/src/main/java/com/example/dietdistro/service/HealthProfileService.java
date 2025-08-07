@@ -4,6 +4,7 @@ import com.example.dietdistro.dto.HealthProfileRequest;
 import com.example.dietdistro.model.HealthProfile;
 import com.example.dietdistro.model.User;
 import com.example.dietdistro.repository.HealthProfileRepository;
+import com.example.dietdistro.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,23 +20,28 @@ import java.util.Optional;
 public class HealthProfileService {
 
     private final HealthProfileRepository profileRepo;
+    private final UserRepository userRepo;
 
     public HealthProfile saveOrUpdateProfile(User user, HealthProfileRequest req) {
         double bmi = calculateBMI(req.getWeight(), req.getHeight());
         double bmr = calculateBMR(req.getWeight(), req.getHeight(), req.getAge(), req.getGender());
 
-        HealthProfile profile = profileRepo.findByUser(user)
-                .orElse(new HealthProfile());
-        profile.setUser(user);
+
+
+//        HealthProfile profile = profileRepo.findByUser(user)
+//                .orElse(new HealthProfile());
+//        profile.setUser(user);
         profile.setHeight(req.getHeight());
         profile.setWeight(req.getWeight());
         profile.setAge(req.getAge());
         profile.setGender(req.getGender());
         profile.setBmi(bmi);
         profile.setBmr(bmr);
-
+        user.setHealthProfile(profile);
         return profileRepo.save(profile);
     }
+
+
 
     private double calculateBMI(double weight, double heightCm) {
         double heightM = heightCm / 100.0;
