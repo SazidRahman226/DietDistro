@@ -13,4 +13,5 @@ public interface FoodItemRepository extends JpaRepository<FoodItem, Long> {
     Optional<FoodItem> findByFoodName(String foodName);
     List<FoodItem> findByCategories(FoodCategory category);
     List<FoodItem> findByCategoriesName(String categoryName);
+    Boolean existsByFoodName(String foodName);
 }

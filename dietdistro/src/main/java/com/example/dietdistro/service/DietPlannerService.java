@@ -19,7 +19,7 @@ public class DietPlannerService {
 
     public List<FoodItem> getCarbFood()
     {
-        FoodCategory carbCategory = foodCategoryRepository.findByName("carbohydrate")
+        FoodCategory carbCategory = foodCategoryRepository.findByName("Carbohydrate")
                 .orElseThrow(() -> new IllegalArgumentException("Category 'Carbohydrates' not found"));
 
         return foodItemRepository.findByCategories(carbCategory);
@@ -27,7 +27,7 @@ public class DietPlannerService {
 
     public List<FoodItem> getProteinFood()
     {
-        FoodCategory proteinCategory = foodCategoryRepository.findByName("protein")
+        FoodCategory proteinCategory = foodCategoryRepository.findByName("Protein")
                 .orElseThrow(() -> new IllegalArgumentException("Category 'protein' not found"));
 
         return foodItemRepository.findByCategories(proteinCategory);
@@ -35,7 +35,7 @@ public class DietPlannerService {
 
     public List<FoodItem> getFatFood()
     {
-        FoodCategory fatCategory = foodCategoryRepository.findByName("fat")
+        FoodCategory fatCategory = foodCategoryRepository.findByName("Fat")
                 .orElseThrow(() -> new IllegalArgumentException("Category 'fat' not found"));
 
         return foodItemRepository.findByCategories(fatCategory);

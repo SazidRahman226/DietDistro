@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DietPlannerController {
 
-    private DietPlannerService dietPlannerService;
+    private final DietPlannerService dietPlannerService;
 
     @GetMapping("/carbohydrate")
     public ResponseEntity<?> getCarbohydrate(@AuthenticationPrincipal CustomUserDetails customUserDetails)

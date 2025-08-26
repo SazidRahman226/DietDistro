@@ -43,7 +43,11 @@ public class DataLoaderService {
 
         // Load food items
         for (DataJson.FoodItemData food : dataJson.getFoods()) {
-            FoodItem foodItem = new FoodItem();
+            FoodItem foodItem;
+            if(foodItemRepository.existsByFoodName(food.foodName))
+                foodItem = foodItemRepository.findByFoodName(food.foodName).orElseThrow(() -> new RuntimeException("Food not Found!"));
+            else
+                foodItem = new FoodItem();
             foodItem.setFoodName(food.getFoodName());
             foodItem.setCalorie(food.getCalorie());
             foodItem.setCarbohydrate(food.getCarbohydrate());

@@ -22,16 +22,16 @@ public class FoodCategoryConfig implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        if (!foodCategoryRepository.existsByName("carbohydrate")) {
-            foodCategoryRepository.save(new FoodCategory("carbohydrate"));
+        if (!foodCategoryRepository.existsByName("Carbohydrate")) {
+            foodCategoryRepository.save(new FoodCategory("Carbohydrate"));
         }
 
-        if (!foodCategoryRepository.existsByName("protein")) {
-            foodCategoryRepository.save(new FoodCategory("protein"));
+        if (!foodCategoryRepository.existsByName("Protein")) {
+            foodCategoryRepository.save(new FoodCategory("Protein"));
         }
 
-        if (!foodCategoryRepository.existsByName("fat")) {
-            foodCategoryRepository.save(new FoodCategory("fat"));
+        if (!foodCategoryRepository.existsByName("Fat")) {
+            foodCategoryRepository.save(new FoodCategory("Fat"));
         }
     }
 }
