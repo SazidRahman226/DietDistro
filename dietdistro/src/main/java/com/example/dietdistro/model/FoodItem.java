@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,11 +21,20 @@ public class FoodItem {
     @Column(nullable = false, unique = true)
     private String foodName;
 
-    @Column(nullable = false)
-    private Set < String > category;
+    @ManyToMany
+    @JoinTable(
+            name = "FoodItemCategory",
+            joinColumns = @JoinColumn(name = "food_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "food_category_id")
+    )
+    private Set<FoodCategory> categories = new HashSet<>();
 
-    @Column(nullable = false)
-    private Double caloriePerGram;
+    // per 100 gm
+    @Column(nullable = false) private Double calorie;
+    @Column private Double carbohydrate;
+    @Column private Double protein;
+    @Column private Double fat;
+
 
     @Column(nullable = false)
     private String description;

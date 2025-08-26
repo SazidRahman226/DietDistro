@@ -1,5 +1,7 @@
 package com.example.dietdistro.dto;
 
+import com.example.dietdistro.model.FoodCategory;
+import com.example.dietdistro.model.MacroType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -11,9 +13,17 @@ public class FoodItemRequest {
     @NotBlank
     private String foodName;
 
-    private Set< String > category; // Carbohydrate, Protein, Fat
+    private Set<FoodCategory> foodCategories; // Carbohydrate, Protein, Fat
 
-    private Double caloriePerGram;
+    // total calories per 100 gm
+    private Double calorie;
+    // carbohydrate calories per 100 gm food
+    private Double carbohydrate;
+    // protein calories per 100 gm food
+    private Double protein;
+    // fat calories per 100 gm food
+    private Double fat;
+
     @NotBlank
     private String description;
 }

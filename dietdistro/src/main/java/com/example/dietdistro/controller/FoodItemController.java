@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/info/food")
+@RequestMapping("/api/food")
 @RequiredArgsConstructor
 public class FoodItemController {
 
-    private final FoodItemService foodItemServiceService;
+    private final FoodItemService foodItemService;
     private final FoodItemRepository foodItemRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -26,7 +26,7 @@ public class FoodItemController {
     public ResponseEntity<?> createOrUpdateProfile(@Valid @RequestBody FoodItemBatchRequest request) {
 
         for(FoodItemRequest foodItemRequest : request.getFoodItems()) {
-            FoodItem foodITem = foodItemServiceService.saveOrUpdateFoodItem(foodItemRequest);
+            FoodItem foodITem = foodItemService.saveOrUpdateFoodItem(foodItemRequest);
         }
         return ResponseEntity.ok("Items added successfully!");
     }
@@ -34,7 +34,7 @@ public class FoodItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> createOrUpdateProfile(@Valid @RequestBody FoodItemRequest foodItemRequest) {
-        FoodItem foodITem = foodItemServiceService.saveOrUpdateFoodItem(foodItemRequest);
+        FoodItem foodITem = foodItemService.saveOrUpdateFoodItem(foodItemRequest);
         return ResponseEntity.ok("Food item added!");
 
     }

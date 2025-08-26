@@ -14,7 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/health-profile")
+@RequestMapping("/api/health-profile")
 @RequiredArgsConstructor
 public class HealthProfileController {
 

@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/util")
 @RequiredArgsConstructor
 public class UtilityController {
     private final UserRepository userRepository;
@@ -35,7 +35,7 @@ public class UtilityController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin-access")
+    @PostMapping("/grant-admin-access")
     public ResponseEntity<?> adminAccess(@RequestBody String username)
     {
         User user = userRepository.findByUsername(username)

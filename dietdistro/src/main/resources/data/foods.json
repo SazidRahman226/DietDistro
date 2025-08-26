@@ -1,0 +1,441 @@
+{
+    "categories": [
+        { "name": "Carbohydrate" },
+        { "name": "Protein" },
+        { "name": "Fat" }
+    ],
+    "foods": [
+        {
+            "foodName": "Rice",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 130.0,
+            "carbohydrate": 28.0,
+            "protein": 2.7,
+            "fat": 0.3,
+            "description": "A staple carbohydrate source used worldwide."
+        },
+        {
+            "foodName": "Chicken Breast",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 165.0,
+            "carbohydrate": 0.0,
+            "protein": 31.0,
+            "fat": 3.6,
+            "description": "A lean source of protein, ideal for muscle building."
+        },
+        {
+            "foodName": "Potato",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 77.0,
+            "carbohydrate": 17.0,
+            "protein": 2.0,
+            "fat": 0.1,
+            "description": "A versatile root vegetable used in various dishes."
+        },
+        {
+            "foodName": "Broccoli",
+            "foodCategories": ["Protein", "Carbohydrate"],
+            "calorie": 55.0,
+            "carbohydrate": 11.2,
+            "protein": 3.7,
+            "fat": 0.6,
+            "description": "A green vegetable high in fiber and vitamins."
+        },
+        {
+            "foodName": "Salmon",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 208.0,
+            "carbohydrate": 0.0,
+            "protein": 20.0,
+            "fat": 13.0,
+            "description": "A fatty fish rich in omega-3 fatty acids."
+        },
+        {
+            "foodName": "Apple",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 52.0,
+            "carbohydrate": 14.0,
+            "protein": 0.3,
+            "fat": 0.2,
+            "description": "A sweet, crunchy fruit that is a good source of fiber."
+        },
+        {
+            "foodName": "Banana",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 89.0,
+            "carbohydrate": 23.0,
+            "protein": 1.1,
+            "fat": 0.3,
+            "description": "A tropical fruit that is high in potassium."
+        },
+        {
+            "foodName": "Almonds",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 576.0,
+            "carbohydrate": 22.0,
+            "protein": 21.2,
+            "fat": 49.9,
+            "description": "A high-calorie snack rich in healthy fats and protein."
+        },
+        {
+            "foodName": "Egg",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 155.0,
+            "carbohydrate": 1.1,
+            "protein": 13.0,
+            "fat": 11.0,
+            "description": "A complete protein source that is high in healthy fats."
+        },
+        {
+            "foodName": "Spinach",
+            "foodCategories": ["Protein", "Carbohydrate"],
+            "calorie": 23.0,
+            "carbohydrate": 3.6,
+            "protein": 2.9,
+            "fat": 0.4,
+            "description": "A leafy green vegetable packed with iron and vitamins."
+        },
+        {
+            "foodName": "Avocado",
+            "foodCategories": ["Fat"],
+            "calorie": 160.0,
+            "carbohydrate": 8.5,
+            "protein": 2.0,
+            "fat": 14.7,
+            "description": "A creamy fruit that is a great source of healthy fats."
+        },
+        {
+            "foodName": "Carrot",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 41.0,
+            "carbohydrate": 9.6,
+            "protein": 0.9,
+            "fat": 0.2,
+            "description": "A crunchy vegetable rich in beta-carotene."
+        },
+        {
+            "foodName": "Turkey",
+            "foodCategories": ["Protein"],
+            "calorie": 135.0,
+            "carbohydrate": 0.0,
+            "protein": 30.0,
+            "fat": 1.0,
+            "description": "A lean source of protein, perfect for low-fat diets."
+        },
+        {
+            "foodName": "Cheese",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 402.0,
+            "carbohydrate": 1.3,
+            "protein": 25.0,
+            "fat": 33.0,
+            "description": "A dairy product that is rich in protein and fat."
+        },
+        {
+            "foodName": "Tomato",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 18.0,
+            "carbohydrate": 3.9,
+            "protein": 0.9,
+            "fat": 0.2,
+            "description": "A juicy fruit often used in salads and sauces."
+        },
+        {
+            "foodName": "Cucumber",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 16.0,
+            "carbohydrate": 3.6,
+            "protein": 0.7,
+            "fat": 0.1,
+            "description": "A refreshing vegetable that is mostly water."
+        },
+        {
+            "foodName": "Yogurt",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 59.0,
+            "carbohydrate": 3.6,
+            "protein": 3.5,
+            "fat": 3.3,
+            "description": "A fermented dairy product that is rich in probiotics."
+        },
+        {
+            "foodName": "Oats",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 389.0,
+            "carbohydrate": 66.3,
+            "protein": 16.9,
+            "fat": 6.9,
+            "description": "A whole grain that is high in fiber and a good breakfast option."
+        },
+        {
+            "foodName": "Chickpeas",
+            "foodCategories": ["Protein", "Carbohydrate"],
+            "calorie": 164.0,
+            "carbohydrate": 27.4,
+            "protein": 8.9,
+            "fat": 2.6,
+            "description": "A legume that is high in protein and fiber."
+        },
+        {
+            "foodName": "Lentils",
+            "foodCategories": ["Protein", "Carbohydrate"],
+            "calorie": 116.0,
+            "carbohydrate": 20.1,
+            "protein": 9.0,
+            "fat": 0.4,
+            "description": "A plant-based protein source commonly used in soups and stews."
+        },
+        {
+            "foodName": "Tuna",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 132.0,
+            "carbohydrate": 0.0,
+            "protein": 28.0,
+            "fat": 3.0,
+            "description": "A popular fish rich in protein and omega-3 fats."
+        },
+        {
+            "foodName": "Sweet Potato",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 86.0,
+            "carbohydrate": 20.0,
+            "protein": 1.6,
+            "fat": 0.1,
+            "description": "A nutritious root vegetable that is high in vitamins."
+        },
+        {
+            "foodName": "Quinoa",
+            "foodCategories": ["Carbohydrate", "Protein"],
+            "calorie": 120.0,
+            "carbohydrate": 21.3,
+            "protein": 4.1,
+            "fat": 1.9,
+            "description": "A complete protein and gluten-free grain alternative."
+        },
+        {
+            "foodName": "Cottage Cheese",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 98.0,
+            "carbohydrate": 3.4,
+            "protein": 11.1,
+            "fat": 4.3,
+            "description": "A dairy product that is high in protein and low in fat."
+        },
+        {
+            "foodName": "Pork Tenderloin",
+            "foodCategories": ["Protein"],
+            "calorie": 143.0,
+            "carbohydrate": 0.0,
+            "protein": 22.0,
+            "fat": 4.0,
+            "description": "A lean cut of pork that is high in protein."
+        },
+        {
+            "foodName": "Beef Steak",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 250.0,
+            "carbohydrate": 0.0,
+            "protein": 22.0,
+            "fat": 18.0,
+            "description": "A rich source of protein and fat commonly grilled."
+        },
+        {
+            "foodName": "Cauliflower",
+            "foodCategories": ["Carbohydrate", "Protein"],
+            "calorie": 25.0,
+            "carbohydrate": 4.9,
+            "protein": 1.9,
+            "fat": 0.3,
+            "description": "A cruciferous vegetable with a mild flavor."
+        },
+        {
+            "foodName": "Kale",
+            "foodCategories": ["Carbohydrate", "Protein"],
+            "calorie": 49.0,
+            "carbohydrate": 9.0,
+            "protein": 4.3,
+            "fat": 0.9,
+            "description": "A nutrient-dense leafy green high in antioxidants."
+        },
+        {
+            "foodName": "Zucchini",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 17.0,
+            "carbohydrate": 3.1,
+            "protein": 1.2,
+            "fat": 0.3,
+            "description": "A summer squash commonly used in cooking and baking."
+        },
+        {
+            "foodName": "Mushrooms",
+            "foodCategories": ["Protein", "Carbohydrate"],
+            "calorie": 22.0,
+            "carbohydrate": 3.3,
+            "protein": 3.1,
+            "fat": 0.3,
+            "description": "A low-calorie vegetable rich in flavor and nutrients."
+        },
+        {
+            "foodName": "Pear",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 57.0,
+            "carbohydrate": 15.0,
+            "protein": 0.4,
+            "fat": 0.1,
+            "description": "A juicy fruit that is high in dietary fiber."
+        },
+        {
+            "foodName": "Peas",
+            "foodCategories": ["Carbohydrate", "Protein"],
+            "calorie": 81.0,
+            "carbohydrate": 14.5,
+            "protein": 5.4,
+            "fat": 0.4,
+            "description": "A high-protein legume used in soups and salads."
+        },
+        {
+            "foodName": "Bacon",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 42.0,
+            "carbohydrate": 0.1,
+            "protein": 3.0,
+            "fat": 3.3,
+            "description": "A flavorful fatty meat typically used in breakfast dishes."
+        },
+        {
+            "foodName": "Cabbage",
+            "foodCategories": ["Carbohydrate", "Protein"],
+            "calorie": 25.0,
+            "carbohydrate": 5.8,
+            "protein": 1.3,
+            "fat": 0.1,
+            "description": "A leafy vegetable often used in salads and stir-fries."
+        },
+        {
+            "foodName": "Watermelon",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 30.0,
+            "carbohydrate": 8.0,
+            "protein": 0.6,
+            "fat": 0.2,
+            "description": "A refreshing, hydrating summer fruit."
+        },
+        {
+            "foodName": "Greek Yogurt",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 59.0,
+            "carbohydrate": 3.6,
+            "protein": 10.0,
+            "fat": 3.3,
+            "description": "A thick yogurt rich in probiotics and protein."
+        },
+        {
+            "foodName": "Pineapple",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 50.0,
+            "carbohydrate": 13.1,
+            "protein": 0.5,
+            "fat": 0.1,
+            "description": "A tropical fruit that is rich in vitamin C and antioxidants."
+        },
+        {
+            "foodName": "Peach",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 39.0,
+            "carbohydrate": 9.6,
+            "protein": 0.9,
+            "fat": 0.3,
+            "description": "A juicy, sweet fruit that is a good source of vitamins."
+        },
+        {
+            "foodName": "Grapefruit",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 42.0,
+            "carbohydrate": 10.5,
+            "protein": 0.8,
+            "fat": 0.1,
+            "description": "A citrus fruit that is both sweet and tart, rich in vitamin C."
+        },
+        {
+            "foodName": "Mango",
+            "foodCategories": ["Carbohydrate"],
+            "calorie": 60.0,
+            "carbohydrate": 15.0,
+            "protein": 0.8,
+            "fat": 0.4,
+            "description": "A sweet, tropical fruit that's packed with vitamin C."
+        },
+        {
+            "foodName": "Coconut",
+            "foodCategories": ["Fat"],
+            "calorie": 354.0,
+            "carbohydrate": 15.2,
+            "protein": 3.3,
+            "fat": 33.5,
+            "description": "A high-calorie fruit rich in healthy fats."
+        },
+        {
+            "foodName": "Cashews",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 553.0,
+            "carbohydrate": 30.0,
+            "protein": 18.2,
+            "fat": 43.9,
+            "description": "A crunchy nut that's packed with protein and healthy fats."
+        },
+        {
+            "foodName": "Walnuts",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 654.0,
+            "carbohydrate": 14.0,
+            "protein": 15.2,
+            "fat": 65.2,
+            "description": "A nutrient-dense nut that is a great source of omega-3 fats."
+        },
+        {
+            "foodName": "Chia Seeds",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 486.0,
+            "carbohydrate": 42.1,
+            "protein": 16.5,
+            "fat": 30.7,
+            "description": "A tiny seed that is packed with fiber and omega-3 fatty acids."
+        },
+        {
+            "foodName": "Flax Seeds",
+            "foodCategories": ["Fat", "Protein"],
+            "calorie": 534.0,
+            "carbohydrate": 28.9,
+            "protein": 18.3,
+            "fat": 42.2,
+            "description": "A nutrient-rich seed high in fiber and healthy fats."
+        },
+        {
+            "foodName": "Chia Pudding",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 150.0,
+            "carbohydrate": 12.0,
+            "protein": 6.0,
+            "fat": 10.0,
+            "description": "A creamy dessert made from chia seeds and almond milk."
+        },
+        {
+            "foodName": "Soy Milk",
+            "foodCategories": ["Protein"],
+            "calorie": 33.0,
+            "carbohydrate": 4.3,
+            "protein": 3.3,
+            "fat": 1.8,
+            "description": "A plant-based milk alternative made from soybeans."
+        },
+        {
+            "foodName": "Tofu",
+            "foodCategories": ["Protein", "Fat"],
+            "calorie": 76.0,
+            "carbohydrate": 1.9,
+            "protein": 8.0,
+            "fat": 4.8,
+            "description": "A soy-based product that is a good source of plant-based protein."
+        }
+    ]
+}

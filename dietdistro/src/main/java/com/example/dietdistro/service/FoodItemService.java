@@ -20,9 +20,12 @@ public class FoodItemService {
         FoodItem _food = foodItemRepo.findByFoodName(itemRequest.getFoodName())
                 .orElse(new FoodItem());
         _food.setFoodName(itemRequest.getFoodName());
-        _food.setCategory(itemRequest.getCategory());
         _food.setDescription(itemRequest.getDescription());
-        _food.setCaloriePerGram(itemRequest.getCaloriePerGram());
+        _food.setCategories(itemRequest.getFoodCategories());
+        _food.setCalorie(itemRequest.getCalorie());
+        _food.setCarbohydrate(itemRequest.getCarbohydrate());
+        _food.setProtein((itemRequest.getProtein()));
+        _food.setFat(itemRequest.getFat());
         return foodItemRepo.save(_food);
     }
 
