@@ -8,10 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DataLoaderService {
 
-    @Value("${data.file.path}")
+    //@Value("${data.file.path}")
     private String dataFilePath; // Path to the external JSON file
 
     private final FoodCategoryRepository foodCategoryRepository;
@@ -31,8 +33,8 @@ public class DataLoaderService {
     @PostConstruct
     public void loadData() throws IOException {
         // Load JSON data from the external file
-        File file = new File(dataFilePath);
-        DataJson dataJson = objectMapper.readValue(file, DataJson.class);
+        InputStream inputStream = new ClassPathResource("data/foods.json").getInputStream();
+        DataJson dataJson = objectMapper.readValue(inputStream, DataJson.class);
 
         // Load categories if not already in the repository
         for (FoodCategory category : dataJson.getCategories()) {

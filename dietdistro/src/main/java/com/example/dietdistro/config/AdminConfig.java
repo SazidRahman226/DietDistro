@@ -20,20 +20,25 @@ public class AdminConfig implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args)
-    {
-        User user = new User();
+    public void run(String... args) {
+        Role userRole = roleRepository.findByName("ROLE_USER")
+                .orElseGet(() -> roleRepository.save(new Role("ROLE_USER")));
 
-        Role userRole = roleRepository.findByName("ROLE_USER").orElseThrow();
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN").orElseThrow();
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN")
+                .orElseGet(() -> roleRepository.save(new Role("ROLE_ADMIN")));
 
-        user.setUsername("admin");
-        user.setEmail("admin");
-        user.setPassword(passwordEncoder.encode("admin"));
-        user.setRoles(Set.of(userRole, adminRole));
+        if (!userRepository.existsByUsername("admin")) {
+            User user = new User();
+            user.setUsername("admin");
+            user.setEmail("admin@example.com"); // better to use a real email format
+            user.setPassword(passwordEncoder.encode("admin")); // never store plain text
+            user.setRoles(Set.of(userRole, adminRole));
 
-        if(!userRepository.existsByUsername("admin")) {
             userRepository.save(user);
+            System.out.println("✅ Admin user created: admin / admin");
+        } else {
+            System.out.println("ℹ️ Admin user already exists");
         }
     }
+
 }
