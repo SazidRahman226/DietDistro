@@ -3,6 +3,8 @@ package com.example.dietdistro.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.FetchType.EAGER;

@@ -1,6 +1,7 @@
 package com.example.dietdistro.dto;
 
 import com.example.dietdistro.model.FoodCategory;
+import com.example.dietdistro.model.FoodItem;
 import com.example.dietdistro.model.MacroType;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -8,7 +9,7 @@ import lombok.*;
 import java.util.Set;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class FoodItemRequest {
+public class FoodItemRequest extends FoodItem {
 
     @NotBlank
     private String foodName;
