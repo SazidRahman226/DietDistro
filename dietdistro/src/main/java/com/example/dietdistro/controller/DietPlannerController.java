@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/diet")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class DietPlannerController {
 
     private final DietPlannerService dietPlannerService;

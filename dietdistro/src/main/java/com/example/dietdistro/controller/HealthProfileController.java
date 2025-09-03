@@ -17,7 +17,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -45,27 +47,20 @@ public class HealthProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        HealthProfile healthProfile = profileService.getId(user.getHealthProfile().getId()).orElseThrow(() -> new RuntimeException("User not found!"));
+        HealthProfile healthProfile = profileService.getId(user.getHealthProfile().getId())
+                .orElseThrow(() -> new RuntimeException("User not found!"));
 
-        Set<Menu> menuList = new HashSet<Menu>();
+        Map<String, Object> response = new HashMap<>();
+        response.put("username", user.getUsername());
+        response.put("age", healthProfile.getAge());
+        response.put("height", healthProfile.getHeight());
+        response.put("weight", healthProfile.getWeight());
+        response.put("gender", healthProfile.getGender());
+        response.put("bmi", healthProfile.getBmi());
+        response.put("bmr", healthProfile.getBmr());
+        response.put("menus", healthProfile.getMenuIds());
 
-        for(Long id : healthProfile.getMenuIds())
-        {
-            Menu menu = menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!"));
-            menuList.add(menu);
-        }
-
-        return ResponseEntity.ok(
-                "{" +
-                        "\n\t\"username\": " + "\"" + user.getUsername() + "\"" +
-                        "\n\t\"age\": " + healthProfile.getAge() +
-                        "\n\t\"height\":" + healthProfile.getHeight() +
-                        "\n\t\"weight\":" + healthProfile.getWeight() +
-                        "\n\t\"bmi\":" + healthProfile.getBmi() +
-                        "\n\t\"bmr\":" + healthProfile.getBmr() +
-                        "\n\t\"menus\":" + healthProfile.getMenuIds() +
-                "\n}"
-        );
+        return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasRole('USER')")
