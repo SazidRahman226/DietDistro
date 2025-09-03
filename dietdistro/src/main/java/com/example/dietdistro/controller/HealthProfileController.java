@@ -23,6 +23,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/health-profile")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class HealthProfileController {
 
     private final HealthProfileService profileService;
