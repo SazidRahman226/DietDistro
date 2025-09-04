@@ -61,44 +61,7 @@ public class DietPlannerController {
 
     @PostMapping("/create-menu/foods")
     public ResponseEntity<?> setFoods(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody MenuRequest menuRequest) {
-        // Create a new Menu and save it
-        Menu menu = new Menu();
-        menuRepository.save(menu);
-
-        // Retrieve the health profile of the user
-        HealthProfile healthProfile = healthProfileRepository.findByUser(customUserDetails.getUser()).orElseThrow(() -> new RuntimeException("User not found!"));
-
-        System.out.println("Error at dietcontroller 62 Menu Id : " + menu.getId());
-        System.out.println(customUserDetails.getUser().getMenuIds());
-
-        // Add the menu to the user's menu list
-        customUserDetails.getUser().getMenuIds().add(menu.getId());
-
-        // Loop over the menu items in the request
-        for (MenuItemRequest menuItemRequest : menuRequest.getMenu()) {
-            // Create new MenuItem for each item in the request
-            MenuItem menuItem = new MenuItem();
-            menuItem.setFoodId(menuItemRequest.getFoodId());
-            menuItem.setFoodName(menuItemRequest.getFoodName());
-            menuItem.setFoodQuantity(menuItemRequest.getFoodQuantity());
-
-            // Add the MenuItem to the Menu
-            menu.getMenuItems().add(menuItem);
-
-            // Set the menu reference in the MenuItem
-            menuItem.setMenu(menu);
-        }
-
-        // Save the menu (this will also persist the menu items due to cascade)
-        menuRepository.save(menu);
-        userRepository.save(customUserDetails.getUser());
-        // Save the health profile if needed
-        healthProfileRepository.save(healthProfile);
-
-        // Optionally save other data if required
-        // dietPlannerService.saveFoods(customUserDetails.getUser(), menuRequest);
-
-        // Return success response
+        dietPlannerService.saveMenuRequest(customUserDetails, menuRequest);
         return ResponseEntity.ok("Foods added!");
     }
 

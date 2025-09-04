@@ -20,8 +20,7 @@ public class MenuItem {
     private String foodName;
     private String foodQuantity;
 
-    // Define ManyToOne relationship to Menu entity
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_id")  // This creates the foreign key in the menu_item table
+    @JoinColumn(name = "menu_id")
     private Menu menu;
 }

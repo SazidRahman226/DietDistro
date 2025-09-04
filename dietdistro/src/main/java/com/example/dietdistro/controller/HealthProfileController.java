@@ -32,7 +32,7 @@ import java.util.Set;
 @CrossOrigin(origins = "http://localhost:5173")
 public class HealthProfileController {
 
-    private final HealthProfileService profileService;
+    private final HealthProfileService healthProfileService;
     private final UserRepository userRepository;
     private final MenuRepository menuRepository;
     private final HealthProfileRepository healthProfileRepository;
@@ -43,7 +43,7 @@ public class HealthProfileController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @RequestBody HealthProfileRequest request) {
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found!"));
-        HealthProfile profile = profileService.saveOrUpdateProfile(user, request);
+        HealthProfile profile = healthProfileService.saveOrUpdateProfile(user, request);
         return ResponseEntity.ok("{\n\t\"bmi\": " + profile.getBmi() + "\n\t\"bmr\": " + profile.getBmr() + "\n}");
     }
 
@@ -51,7 +51,7 @@ public class HealthProfileController {
     @GetMapping
     public ResponseEntity<?> getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        HealthProfile healthProfile = profileService.getId(user.getHealthProfile().getId())
+        HealthProfile healthProfile = healthProfileService.getId(user.getHealthProfile().getId())
                 .orElseThrow(() -> new RuntimeException("User not found!"));
 
         Map<String, Object> response = new HashMap<>();
@@ -70,31 +70,8 @@ public class HealthProfileController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/getMenu")
     public ResponseEntity<?> getMenu(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        HealthProfile healthProfile = healthProfileRepository
-                .findByUser(customUserDetails.getUser())
-                .orElseThrow(() -> new RuntimeException("Health Profile not found!"));
 
-        Map<Long, MenuRequest> response = new HashMap<>();
-
-        for (Long id : customUserDetails.getUser().getMenuIds()) {
-            System.out.println("Error at 82" + " Currwent : " + id);
-
-            MenuRequest menuRequest = new MenuRequest();
-
-            for(MenuItem menuItem : menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!")).getMenuItems())
-            {
-                MenuItemRequest menuItemRequest = new MenuItemRequest();
-
-                menuItemRequest.setFoodId(menuItem.getFoodId());
-                menuItemRequest.setFoodName(menuItem.getFoodName());
-                menuItemRequest.setFoodQuantity(menuItem.getFoodQuantity());
-
-                menuRequest.getMenu().add(menuItemRequest);
-            }
-            System.out.println("Error at 85");
-            response.put(id, menuRequest);
-        }
-        System.out.println("Error at 87");
+        Map<Long, MenuRequest> response = healthProfileService.fetchResponse(customUserDetails);
         return ResponseEntity.ok(response);
     }
 }

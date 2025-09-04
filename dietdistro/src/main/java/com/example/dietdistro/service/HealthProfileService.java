@@ -1,15 +1,22 @@
 package com.example.dietdistro.service;
 
 import com.example.dietdistro.dto.HealthProfileRequest;
+import com.example.dietdistro.dto.MenuItemRequest;
+import com.example.dietdistro.dto.MenuRequest;
 import com.example.dietdistro.model.HealthProfile;
+import com.example.dietdistro.model.MenuItem;
 import com.example.dietdistro.model.User;
 import com.example.dietdistro.repository.HealthProfileRepository;
+import com.example.dietdistro.repository.MenuRepository;
 import com.example.dietdistro.repository.UserRepository;
+import com.example.dietdistro.security.CustomUserDetails;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,26 +27,24 @@ public class HealthProfileService {
 
     private final HealthProfileRepository profileRepo;
     private final UserRepository userRepo;
+    private final MenuRepository menuRepository;
 
     public HealthProfile saveOrUpdateProfile(User user, HealthProfileRequest req) {
-        // 1. Calculate BMI and BMR
+
         double bmi = calculateBMI(req.getWeight(), req.getHeight());
         double bmr = calculateBMR(req.getWeight(), req.getHeight(), req.getAge(), req.getGender());
 
-        // 2. Get existing profile or create a new one
         HealthProfile profile;
         if (user.getHealthProfile() != null) {
-            // If the user already has a profile, use it
+
             profile = user.getHealthProfile();
         } else {
-            // Otherwise, create a new profile
+
             profile = new HealthProfile();
-            // Since it's a new profile, set the bidirectional relationship
             profile.setUser(user);
             user.setHealthProfile(profile);
         }
 
-        // 3. Update the profile's fields with new data
         profile.setHeight(req.getHeight());
         profile.setWeight(req.getWeight());
         profile.setAge(req.getAge());
@@ -47,7 +52,6 @@ public class HealthProfileService {
         profile.setBmi(bmi);
         profile.setBmr(bmr);
 
-        // 4. Save the profile
         return profileRepo.save(profile);
     }
 
@@ -70,8 +74,25 @@ public class HealthProfileService {
         return profileRepo.findById(id);
     }
 
-    public String getName(User user)
+
+    public Map<Long, MenuRequest> fetchResponse(CustomUserDetails customUserDetails)
     {
-        return user.getUsername();
+        Map<Long, MenuRequest> response = new HashMap<>();
+        for (Long id : customUserDetails.getUser().getMenuIds()) {
+            MenuRequest menuRequest = new MenuRequest();
+
+            for(MenuItem menuItem : menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!")).getMenuItems())
+            {
+                MenuItemRequest menuItemRequest = new MenuItemRequest();
+
+                menuItemRequest.setFoodId(menuItem.getFoodId());
+                menuItemRequest.setFoodName(menuItem.getFoodName());
+                menuItemRequest.setFoodQuantity(menuItem.getFoodQuantity());
+
+                menuRequest.getMenu().add(menuItemRequest);
+            }
+            response.put(id, menuRequest);
+        }
+        return response;
     }
 }
