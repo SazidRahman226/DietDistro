@@ -1,23 +1,15 @@
 package com.example.dietdistro.service;
 
-import com.example.dietdistro.dto.FoodItemBatchRequest;
-import com.example.dietdistro.dto.FoodItemRequest;
-import com.example.dietdistro.dto.MealDto;
-import com.example.dietdistro.dto.MenuRequest;
-import com.example.dietdistro.dto.MenuRequest;
+import com.example.dietdistro.dto.*;
 import com.example.dietdistro.model.*;
 import com.example.dietdistro.repository.FoodCategoryRepository;
 import com.example.dietdistro.repository.FoodItemRepository;
 import com.example.dietdistro.repository.HealthProfileRepository;
 import com.example.dietdistro.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -54,57 +46,50 @@ public class DietPlannerService {
 
     public void saveFoods(User user, MenuRequest menuRequest) {
 
-        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
-
-        Menu menu = menuRepository.findById(menuRequest.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
-
-        menu.setBreakfast(menuRequest.getBreakfast());
-        menu.setLunch(menuRequest.getLunch());
-        menu.setDinner(menuRequest.getDinner());
-
-        menu.setTotalCalorie(calculateMenuCalorie(menu));
-
-        healthProfile.getMenuIds().add(menuRequest.getMenuId());
-        menuRepository.save(menu);
-        healthProfileRepository.save(healthProfile);
-
+//        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
+//                .orElseThrow(() -> new RuntimeException("User not found!"));
+//
+//        Menu menu = new Menu();
+//        menu.setMenuItems(menuRequest.getMenu());
+//        healthProfile.getMenuIds().add(menu.getId());
+//
+//        menuRepository.save(menu);
+//        healthProfileRepository.save(healthProfile);
     }
 
-    private void setMeal(Meal meal, MealDto mealDto)
-    {
-        meal.setCarbFood(mealDto.getCarbFood());
-        meal.setProteinFood(mealDto.getProteinFood());
-        meal.setFatFood(mealDto.getFatFood());
-    }
-
-    private double calculateMealCalorie(Meal meal)
-    {
-        double totalCal = 0.0;
-
-        for(FoodEntry food : meal.getCarbFood())
-        {
-            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
-        }
-
-        for(FoodEntry food : meal.getProteinFood())
-        {
-            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
-        }
-
-        for(FoodEntry food : meal.getFatFood())
-        {
-            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
-        }
-
-        return totalCal;
-    }
-
-    private double calculateMenuCalorie(Menu menu)
-    {
-        return calculateMealCalorie(menu.getBreakfast()) + calculateMealCalorie(menu.getLunch()) + calculateMealCalorie(menu.getDinner());
-    }
-
+//    private void setMeal(Meal meal, MealDto mealDto)
+//    {
+//        meal.setCarbFood(mealDto.getCarbFood());
+//        meal.setProteinFood(mealDto.getProteinFood());
+//        meal.setFatFood(mealDto.getFatFood());
+//    }
+//
+//    private double calculateMealCalorie(Meal meal)
+//    {
+//        double totalCal = 0.0;
+//
+//        for(FoodEntry food : meal.getCarbFood())
+//        {
+//            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+//        }
+//
+//        for(FoodEntry food : meal.getProteinFood())
+//        {
+//            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+//        }
+//
+//        for(FoodEntry food : meal.getFatFood())
+//        {
+//            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+//        }
+//
+//        return totalCal;
+//    }
+//
+//    private double calculateMenuCalorie(Menu menu)
+//    {
+//        return calculateMealCalorie(menu.getBreakfast()) + calculateMealCalorie(menu.getLunch()) + calculateMealCalorie(menu.getDinner());
+//    }
 
 
 //    public Boolean saveProteinFood(User user, MenuAddFood menuAddFood)

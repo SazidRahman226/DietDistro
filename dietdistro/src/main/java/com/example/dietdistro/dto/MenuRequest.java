@@ -1,7 +1,9 @@
 package com.example.dietdistro.dto;
 
-import com.example.dietdistro.model.Meal;
+import com.example.dietdistro.model.MenuItem;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -10,10 +12,6 @@ import lombok.*;
 
 public class MenuRequest {
 
-    private Long menuId;
-
-    private Meal breakfast; // only IDs
-    private Meal lunch; // only IDs
-    private Meal dinner; // only IDs
+    private Set<MenuItemRequest> menu;
 
 }

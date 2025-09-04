@@ -2,7 +2,6 @@ package com.example.dietdistro.dto;
 
 import com.example.dietdistro.model.FoodCategory;
 import com.example.dietdistro.model.FoodItem;
-import com.example.dietdistro.model.MacroType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

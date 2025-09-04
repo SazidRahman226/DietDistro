@@ -14,7 +14,7 @@ import java.util.Set;
 public class HealthProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "health_id_seq_gen")
-    @SequenceGenerator(name = "health_id_seq_gen", sequenceName = "id_gen", allocationSize = 1)
+    @SequenceGenerator(name = "health_id_seq_gen", sequenceName = "health_id_gen", allocationSize = 1)
     private Long id;
 
 
@@ -28,8 +28,6 @@ public class HealthProfile {
 
     @OneToOne(mappedBy = "healthProfile", fetch = FetchType.LAZY)
     private User user;
-
-    private Set<Long> menuIds = new HashSet<>();
 
 
 }
