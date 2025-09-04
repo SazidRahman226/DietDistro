@@ -4,11 +4,13 @@ import com.example.dietdistro.dto.FoodItemBatchRequest;
 import com.example.dietdistro.dto.FoodItemRequest;
 import com.example.dietdistro.model.FoodItem;
 import com.example.dietdistro.repository.FoodItemRepository;
+import com.example.dietdistro.security.CustomUserDetails;
 import com.example.dietdistro.service.FoodItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,5 +46,20 @@ public class FoodItemController {
     public ResponseEntity<?> getFoodWiki() {
         List<FoodItem> foodItems = foodItemRepository.findAll();
         return ResponseEntity.ok(foodItems);
+    }
+
+    @GetMapping("/show/{foodId}")
+    public ResponseEntity<?> getFoodWiki(@PathVariable Long foodId) {
+        FoodItem foodItem = foodItemRepository.findById(foodId).orElseThrow(()-> new RuntimeException("Food not Found!"));
+        return ResponseEntity.ok(foodItem);
+    }
+
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping("/delete/{foodId}")
+    public ResponseEntity<?> deleteFoodItem(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long foodId)
+    {
+        FoodItem foodItem = foodItemRepository.findById(foodId).orElseThrow(()-> new RuntimeException("Food not Found!"));
+        foodItemRepository.delete(foodItem);
+        return ResponseEntity.ok("Food Item deleted!");
     }
 }

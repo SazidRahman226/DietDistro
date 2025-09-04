@@ -2,17 +2,21 @@ package com.example.dietdistro.service;
 
 import com.example.dietdistro.dto.FoodItemBatchRequest;
 import com.example.dietdistro.dto.FoodItemRequest;
-import com.example.dietdistro.dto.MenuAddFood;
+import com.example.dietdistro.dto.MealDto;
+import com.example.dietdistro.dto.MenuRequest;
+import com.example.dietdistro.dto.MenuRequest;
 import com.example.dietdistro.model.*;
 import com.example.dietdistro.repository.FoodCategoryRepository;
 import com.example.dietdistro.repository.FoodItemRepository;
 import com.example.dietdistro.repository.HealthProfileRepository;
 import com.example.dietdistro.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -35,7 +39,7 @@ public class DietPlannerService {
     public List<FoodItem> getProteinFood()
     {
         FoodCategory proteinCategory = foodCategoryRepository.findByName("Protein")
-                .orElseThrow(() -> new IllegalArgumentException("Category 'protein' not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Category 'Protein' not found"));
 
         return foodItemRepository.findByCategories(proteinCategory);
     }
@@ -43,47 +47,94 @@ public class DietPlannerService {
     public List<FoodItem> getFatFood()
     {
         FoodCategory fatCategory = foodCategoryRepository.findByName("Fat")
-                .orElseThrow(() -> new IllegalArgumentException("Category 'fat' not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Category 'Fat' not found"));
 
         return foodItemRepository.findByCategories(fatCategory);
     }
 
-    public void saveCarbFood(User user, MenuAddFood menuAddFood) {
+    public void saveFoods(User user, MenuRequest menuRequest) {
 
         HealthProfile healthProfile = healthProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("User not found!"));
 
-        Menu menu = menuRepository.findById(menuAddFood.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
-        menu.getCarbFood().addAll(menuAddFood.getFoodIds());
-        healthProfile.getMenuIds().add(menuAddFood.getMenuId());
+        Menu menu = menuRepository.findById(menuRequest.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
+
+        menu.setBreakfast(menuRequest.getBreakfast());
+        menu.setLunch(menuRequest.getLunch());
+        menu.setDinner(menuRequest.getDinner());
+
+        menu.setTotalCalorie(calculateMenuCalorie(menu));
+
+        healthProfile.getMenuIds().add(menuRequest.getMenuId());
         menuRepository.save(menu);
         healthProfileRepository.save(healthProfile);
 
     }
 
-    public void saveProteinFood(User user, MenuAddFood menuAddFood)
+    private void setMeal(Meal meal, MealDto mealDto)
     {
-        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
-
-        Menu menu = menuRepository.findById(menuAddFood.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
-
-        menu.getProteinFood().addAll(menuAddFood.getFoodIds());
-        healthProfile.getMenuIds().add(menuAddFood.getMenuId());
-        menuRepository.save(menu);
-        healthProfileRepository.save(healthProfile);
+        meal.setCarbFood(mealDto.getCarbFood());
+        meal.setProteinFood(mealDto.getProteinFood());
+        meal.setFatFood(mealDto.getFatFood());
     }
 
-    public void saveFatFood(User user, MenuAddFood menuAddFood)
+    private double calculateMealCalorie(Meal meal)
     {
-        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+        double totalCal = 0.0;
 
-        Menu menu = menuRepository.findById(menuAddFood.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
+        for(FoodEntry food : meal.getCarbFood())
+        {
+            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+        }
 
-        menu.getFatFood().addAll(menuAddFood.getFoodIds());
-        healthProfile.getMenuIds().add(menuAddFood.getMenuId());
-        menuRepository.save(menu);
-        healthProfileRepository.save(healthProfile);
+        for(FoodEntry food : meal.getProteinFood())
+        {
+            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+        }
+
+        for(FoodEntry food : meal.getFatFood())
+        {
+            totalCal += foodItemRepository.findById(food.getFoodId()).orElseThrow().getCalorie() * (food.getQuantity()/100.0);
+        }
+
+        return totalCal;
     }
+
+    private double calculateMenuCalorie(Menu menu)
+    {
+        return calculateMealCalorie(menu.getBreakfast()) + calculateMealCalorie(menu.getLunch()) + calculateMealCalorie(menu.getDinner());
+    }
+
+
+
+//    public Boolean saveProteinFood(User user, MenuAddFood menuAddFood)
+//    {
+//        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
+//                .orElseThrow(() -> new RuntimeException("User not found!"));
+//
+//        Menu menu = menuRepository.findById(menuAddFood.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
+//
+//        menu.getProteinFood().addAll(menuAddFood.getFoodIds());
+//        healthProfile.getMenuIds().add(menuAddFood.getMenuId());
+//        menuRepository.save(menu);
+//        healthProfileRepository.save(healthProfile);
+//
+//        return isOverLimit(menu, menuAddFood);
+//    }
+//
+//    public Boolean saveFatFood(User user, MenuAddFood menuAddFood)
+//    {
+//        HealthProfile healthProfile = healthProfileRepository.findByUser(user)
+//                .orElseThrow(() -> new RuntimeException("User not found!"));
+//
+//        Menu menu = menuRepository.findById(menuAddFood.getMenuId()).orElseThrow(() -> new RuntimeException("Menu not found!"));
+//
+//        menu.getFatFood().addAll(menuAddFood.getFoodIds());
+//        healthProfile.getMenuIds().add(menuAddFood.getMenuId());
+//        menuRepository.save(menu);
+//        healthProfileRepository.save(healthProfile);
+//
+//        return isOverLimit(menu, menuAddFood);
+//    }
+//
 }

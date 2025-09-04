@@ -1,8 +1,10 @@
 package com.example.dietdistro.model;
 
 import com.example.dietdistro.model.User;
+import com.example.dietdistro.repository.FoodItemRepository;
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,11 +23,13 @@ public class Menu {
     @SequenceGenerator(name = "menu_id_seq_gen", sequenceName = "id_gen", allocationSize = 1)
     private Long id;
 
-    @ElementCollection
-    private Set<Long> carbFood = new HashSet<>();
-    @ElementCollection
-    private Set<Long> proteinFood = new HashSet<>();
-    @ElementCollection
-    private Set<Long> fatFood = new HashSet<>();
+    @Embedded
+    private Meal breakfast;
+    @Embedded
+    private Meal lunch;
+    @Embedded
+    private Meal dinner;
+
+    private Double totalCalorie;
 
 }
