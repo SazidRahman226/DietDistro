@@ -55,7 +55,10 @@ public class UserController {
                 "user", Map.of(
                         "id", user.getId(),
                         "username", user.getUsername(),
-                        "email", user.getEmail()
+                        "email", user.getEmail(),
+                        "roles", user.getRoles().stream()
+                                .map(Role::getName) // e.g. "ROLE_ADMIN"
+                                .toList()
                 )
         ));
     }
@@ -77,7 +80,10 @@ public class UserController {
                 "user", Map.of(
                         "id", _user.getId(),
                         "username", _user.getUsername(),
-                        "email", _user.getEmail()
+                        "email", _user.getEmail(),
+                        "roles", _user.getRoles().stream()
+                                .map(Role::getName) // e.g. "ROLE_ADMIN"
+                                .toList()
                 )
         ));
     }
