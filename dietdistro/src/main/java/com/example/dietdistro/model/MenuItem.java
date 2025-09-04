@@ -18,7 +18,7 @@ public class MenuItem {
 
     private Long foodId;
     private String foodName;
-    private Double foodQuantity;
+    private String foodQuantity;
 
     // Define ManyToOne relationship to Menu entity
     @ManyToOne(fetch = FetchType.LAZY)

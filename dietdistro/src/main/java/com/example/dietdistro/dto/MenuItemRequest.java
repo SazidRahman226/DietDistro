@@ -13,5 +13,6 @@ public class MenuItemRequest {
 
     private Long foodId;
     private String foodName;
-    private Double foodQuantity;
+    private String foodQuantity;
+
 }
