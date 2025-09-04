@@ -3,6 +3,7 @@ package com.example.dietdistro.dto;
 import com.example.dietdistro.model.MenuItem;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -12,6 +13,6 @@ import java.util.Set;
 
 public class MenuRequest {
 
-    private Set<MenuItemRequest> menu;
+    private Set<MenuItemRequest> menu = new HashSet<>();
 
 }

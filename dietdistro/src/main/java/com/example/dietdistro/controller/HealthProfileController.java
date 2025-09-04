@@ -1,6 +1,8 @@
 package com.example.dietdistro.controller;
 
 import com.example.dietdistro.dto.HealthProfileRequest;
+import com.example.dietdistro.dto.MenuItemRequest;
+import com.example.dietdistro.dto.MenuRequest;
 import com.example.dietdistro.model.HealthProfile;
 import com.example.dietdistro.model.Menu;
 import com.example.dietdistro.model.MenuItem;
@@ -72,14 +74,25 @@ public class HealthProfileController {
                 .findByUser(customUserDetails.getUser())
                 .orElseThrow(() -> new RuntimeException("Health Profile not found!"));
 
-        Map<Long, Menu> response = new HashMap<>();
+        Map<Long, MenuRequest> response = new HashMap<>();
 
         for (Long id : customUserDetails.getUser().getMenuIds()) {
             System.out.println("Error at 82" + " Currwent : " + id);
-            response.put(id, menuRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Menu not found!")));
 
+            MenuRequest menuRequest = new MenuRequest();
+
+            for(MenuItem menuItem : menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!")).getMenuItems())
+            {
+                MenuItemRequest menuItemRequest = new MenuItemRequest();
+
+                menuItemRequest.setFoodId(menuItem.getFoodId());
+                menuItemRequest.setFoodName(menuItem.getFoodName());
+                menuItemRequest.setFoodQuantity(menuItem.getFoodQuantity());
+
+                menuRequest.getMenu().add(menuItemRequest);
+            }
             System.out.println("Error at 85");
+            response.put(id, menuRequest);
         }
         System.out.println("Error at 87");
         return ResponseEntity.ok(response);

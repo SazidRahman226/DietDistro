@@ -45,5 +45,5 @@ public class User {
     @JoinColumn(name = "healthprofile_id")
     private HealthProfile healthProfile;
 
-    private List<Long> menuIds = new ArrayList<>();
+    private Set<Long> menuIds = new HashSet<>();
 }
