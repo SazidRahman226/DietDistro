@@ -18,7 +18,7 @@ public class MenuItem {
 
     private Long foodId;
     private String foodName;
-    private String foodQuantity;
+    private Double foodQuantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
