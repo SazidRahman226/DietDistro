@@ -4,6 +4,7 @@ import com.example.dietdistro.dto.HealthProfileRequest;
 import com.example.dietdistro.dto.MenuItemRequest;
 import com.example.dietdistro.dto.MenuRequest;
 import com.example.dietdistro.model.HealthProfile;
+import com.example.dietdistro.model.Menu;
 import com.example.dietdistro.model.MenuItem;
 import com.example.dietdistro.model.User;
 import com.example.dietdistro.repository.HealthProfileRepository;
@@ -75,24 +76,27 @@ public class HealthProfileService {
     }
 
 
-    public Map<Long, MenuRequest> fetchResponse(CustomUserDetails customUserDetails)
-    {
+    public Map<Long, MenuRequest> fetchResponse(CustomUserDetails customUserDetails) {
         Map<Long, MenuRequest> response = new HashMap<>();
+
         for (Long id : customUserDetails.getUser().getMenuIds()) {
+
+            Menu menu = menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!"));
             MenuRequest menuRequest = new MenuRequest();
 
-            for(MenuItem menuItem : menuRepository.findById(id).orElseThrow(() -> new RuntimeException("Menu not found!")).getMenuItems())
-            {
+            for (MenuItem menuItem : menu.getMenuItems()) {
                 MenuItemRequest menuItemRequest = new MenuItemRequest();
-
                 menuItemRequest.setFoodId(menuItem.getFoodId());
                 menuItemRequest.setFoodName(menuItem.getFoodName());
                 menuItemRequest.setFoodQuantity(menuItem.getFoodQuantity());
 
                 menuRequest.getMenu().add(menuItemRequest);
             }
+
             response.put(id, menuRequest);
         }
+
         return response;
     }
+
 }

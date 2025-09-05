@@ -65,5 +65,12 @@ public class DietPlannerController {
         return ResponseEntity.ok("Foods added!");
     }
 
+    @GetMapping("/social/show")
+    public ResponseEntity<?> showAllMenu(@AuthenticationPrincipal CustomUserDetails customUserDetails)
+    {
+        Map<String, Set<MenuRequest>> allUserMenuList = dietPlannerService.getAllUserMenuList(customUserDetails);
+        return ResponseEntity.ok(allUserMenuList);
+    }
+
 
 }
